@@ -1,1 +1,136 @@
+:root {
+  --primary-glow: #00f3ff;
+  --secondary-glow: #ff0055;
+  --bg-dark: #050b14;
+  --panel-bg: rgba(0, 243, 255, 0.05);
+  --text-dim: #5c8399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--primary-glow);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Background HUD Grid Overlay */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(circle at center, rgba(0, 243, 255, 0.1) 0%, transparent 70%),
+    linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+  pointer-events: none;
+}
+
+/* Main Container */
+.hud-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  gap: 20px;
+}
+
+/* Animated Holographic Core */
+.hud-circle-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hud-circle-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed var(--primary-glow);
+  border-radius: 50%;
+  animation: spin-clockwise 12s linear infinite;
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+}
+
+.hud-circle-inner {
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  border: 3px solid transparent;
+  border-top: 3px solid var(--primary-glow);
+  border-bottom: 3px solid var(--primary-glow);
+  border-radius: 50%;
+  animation: spin-counter 3s cubic-bezier(0.53, 0.21, 0.29, 0.67) infinite;
+  filter: drop-shadow(0 0 8px var(--primary-glow));
+}
+
+.hud-core {
+  width: 45%;
+  height: 45%;
+  background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+/* Typography & Status */
+h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+  letter-spacing: 6px;
+  text-shadow: 0 0 12px var(--primary-glow);
+  margin-top: 10px;
+}
+
+#status {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: var(--panel-bg);
+  padding: 8px 18px;
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.05);
+}
+
+/* Active Audio-Listening State Class */
+.listening .hud-circle-inner {
+  border-top-color: var(--secondary-glow);
+  border-bottom-color: var(--secondary-glow);
+  filter: drop-shadow(0 0 12px var(--secondary-glow));
+}
+
+.listening #status {
+  color: var(--secondary-glow);
+  border-color: rgba(255, 0, 85, 0.4);
+}
+
+/* Keyframe Animations */
+@keyframes spin-clockwise {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-counter {
+  100% { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 1; }
+}
 
